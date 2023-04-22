@@ -1,4 +1,4 @@
-import * as elementos from './elementos';
+import * as elementos from 'https://github.com/DavidMOrtizM/TAapInt_S5/blob/main/js/elementos.js';
 var Categorias="";
 if (window.localStorage.length === 0) {
     var List_Noticias = [
@@ -105,7 +105,6 @@ function Listar_Noticias(Categoria){
     
 
     let NoticiasObj = document.getElementById('noticias');
-
     const Tarjeta = new elementos.Tarjeta(ID, 'hola','nacional',foto,texto,audio,video,'01-01-2013');
     NoticiasObj.appendChild(Tarjeta);
 
