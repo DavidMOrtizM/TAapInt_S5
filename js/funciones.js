@@ -1,4 +1,6 @@
-import * as elementos from 'https://github.com/DavidMOrtizM/TAapInt_S5/blob/main/js/elementos.js';
+/*import * as elementos from 'https://davidmortizm.github.io/js/elementos.js';*/
+/*import * as elementos from '../js/elementos'*/
+
 var Categorias="";
 if (window.localStorage.length === 0) {
     var List_Noticias = [
@@ -104,10 +106,13 @@ function Listar_Noticias(Categoria){
     var LocalStorage_Noticas = JSON.parse(localStorage.getItem('Noticias'));*/
     
 
-    let NoticiasObj = document.getElementById('noticias');
-    const Tarjeta = new elementos.Tarjeta(ID, 'hola','nacional',foto,texto,audio,video,'01-01-2013');
-    NoticiasObj.appendChild(Tarjeta);
 
+
+    const ObjTarjeta = new Tarjeta;
+    ObjTarjeta.CrearT3("", 'hola','nacional',"foto","texto","audio","video",'01-01-2013');
+    console.log(ObjTarjeta.titulo)
+/*    let guardar = ObjTarjeta.CrearT3*/
+    NoticiasObj.appendChild(ObjTarjeta.CrearT3);
     /*
     while (NoticiasObj.firstChild) {NoticiasObj.removeChild(NoticiasObj.firstChild)};
     LocalStorage_Noticas.forEach((elemento)=>{
@@ -150,4 +155,58 @@ function Listar_Noticias(Categoria){
     ContadorTxtaObj.innerHTML="Actualmente hay " + contador +" noticias";
     ContadorObj.appendChild(ContadorTxtaObj); 
     */
+}
+
+
+
+
+
+
+class Tarjeta {
+    constructor(ID, titulo,categoria,foto,texto,audio,video,fecha) {
+      this.ID = ID;
+      this.titulo = titulo;
+      this.categoria = categoria;
+      this.foto = foto;
+      this.texto = texto;
+      this.titulo = titulo;
+      this.audio = audio;
+      this.video = video;
+      this.fecha = fecha;
+    }
+  
+    CrearT3() {
+        const ObjContenedor = document.createElement("div");
+        ObjContenedor.classList.add("col-md-4");
+        
+        const ObjTarjeta = document.createElement("div");
+        ObjTarjeta.classList.add("card");
+        
+        const ObjCuerpo = document.createElement("div");
+        ObjCuerpo.classList.add("card-body");
+        
+        const ObjTitulo = document.createElement("h5");
+        ObjTitulo.classList.add("card-title");
+        ObjTitulo.textContent = this.titulo;
+        
+        const ObjFoto = document.createElement("img");
+        ObjFoto.classList.add("card-img-top", "img-fluid");
+        ObjFoto.src = this.foto;
+        ObjFoto.alt = "Imagen de la Noticia";
+
+        let fechaNoticia = new Date(this.fecha);
+        const ObjFecha = document.createElement("p");
+        ObjFecha.classList.add("card-text");
+        ObjFecha.textContent = this.fechaNoticia;
+
+        ObjCuerpo.appendChild(ObjTitulo);
+        ObjCuerpo.appendChild(ObjFoto);
+        ObjCuerpo.appendChild(ObjFecha);
+        ObjTarjeta.appendChild(ObjCuerpo);
+        ObjContenedor.appendChild(ObjTarjeta);
+        let NoticiasObj = document.getElementById('noticias');
+        NoticiasObj.appendChild(ObjContenedor);
+    }
+  
+
 }
