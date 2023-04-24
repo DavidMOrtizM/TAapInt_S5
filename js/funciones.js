@@ -1,5 +1,5 @@
 /*import * as elementos from 'https://davidmortizm.github.io/js/elementos.js';*/
-/*import * as elementos from '../js/elementos'*/
+/*import * as elementos from '../js/elementos.js'*/
 
 var Categorias="";
 if (window.localStorage.length === 0) {
@@ -100,20 +100,50 @@ if (window.localStorage.length === 0) {
     var List_Noticias = JSON.parse(localStorage.getItem('Noticias'));
 }
 
+
+
+
+
+
+
+
+
+
 function Listar_Noticias(Categoria){
     Categorias=Categoria;
     var LocalStorage_Noticas = JSON.parse(localStorage.getItem('Noticias'));
-    const ObjFilaNegocio = new Fila("Negocios");
-    const ObjFilaDeporte = new Fila("Deporte");
-    const ObjFilaNacional = new Fila("Nacional");
-    LocalStorage_Noticas.forEach((elemento)=>{
-       
-        
-        const ObjTarjeta = new Tarjeta(elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+    LocalStorage_Noticas.sort(function(a, b){
+        var fechaA = new Date(a.fecha);
+        var fechaB = new Date(b.fecha);
+        return fechaB - fechaA;
+      });
 
-    
 
-    });
+
+
+        if(Categoria=="Principal"){
+
+            const ObjFPrincipal1 = new Fila("F1","");
+
+            var List_Pri = List_Noticias.slice(0, 1);
+            List_Pri.forEach((elemento)=>{
+                const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+            });
+
+            const ObjFPrincipal2 = new Fila("F2","");
+
+            var List_Seg_Ter = List_Noticias.slice(1, 3);
+            List_Seg_Ter.forEach((elemento)=>{
+                const ObjTarjetaT2 = new Tarjeta("T2",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+            });
+
+            const ObjFilaNacional = new Fila("F3","Nacional");
+            const ObjFilaNegocio = new Fila("F3","Negocios");
+            const ObjFilaDeporte = new Fila("F3","Deportes");
+            LocalStorage_Noticas.forEach((elemento)=>{
+                const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+            });
+        }
     /*
     while (NoticiasObj.firstChild) {NoticiasObj.removeChild(NoticiasObj.firstChild)};
     LocalStorage_Noticas.forEach((elemento)=>{
@@ -212,7 +242,8 @@ class Tarjeta {
 }*/
 
 class Tarjeta {
-    constructor(ID, titulo, categoria, foto, texto, audio, video, fecha) {
+    constructor(tipo, ID, titulo, categoria, foto, texto, audio, video, fecha) {
+      this.tipo=tipo;
       this.ID = ID;
       this.titulo = titulo;
       this.categoria = categoria;
@@ -221,57 +252,238 @@ class Tarjeta {
       this.audio = audio;
       this.video = video;
       this.fecha = fecha;
-/*    }
+/*    }*/
+
+    if(this.tipo=="T1"){
+
+        const ObjContenedor = document.createElement("div");
+        ObjContenedor.classList.add("col-lg-8", "col-md-12");
+
+        // Crear el elemento div con clase card w-100 h-100
+        const ObjTarjeta = document.createElement("div");
+        ObjTarjeta.classList.add("card", "w-100", "h-100");
+
+        // Crear el elemento div con clase card-body
+        const ObjCuerpo = document.createElement("div");
+        ObjCuerpo.classList.add("card-body");
+
+        // Crear el elemento h1 con clase card-title y texto "Título de la noticia"
+        const ObtTitulo = document.createElement("h1");
+        ObtTitulo.classList.add("card-title", "mb-4");
+        ObtTitulo.style.fontSize = "2.5rem";
+        ObtTitulo.textContent = this.titulo;
+
+        // Crear el elemento img con clase card-img-top y src "imagen-destacada.jpg"
+        const OvjFoto = document.createElement("img");
+        OvjFoto.classList.add("card-img-top");
+        OvjFoto.src = this.foto;
+        OvjFoto.alt = "Imagen de la noticia";
+
+        // Crear el elemento h4 con clase card-subtitle y texto "Categoría"
+        const ObjCategoria = document.createElement("h4");
+        ObjCategoria.classList.add("card-subtitle", "mb-2", "text-muted");
+        ObjCategoria.style.fontSize = "1.5rem";
+        ObjCategoria.textContent = this.categoria;
+
+        // Crear el elemento h4 con clase card-subtitle y texto "Fecha"
+        const fechaNoticia = new Date(this.fecha);
+        const ObjFecha = document.createElement("h4");
+        ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
+        ObjFecha.style.fontSize = "1.5rem";
+        ObjFecha.textContent = fechaNoticia.toDateString();;
+
+        // Crear el elemento p con clase card-text y texto "Texto breve de la noticia importante."
+        const ObjParrafo = document.createElement("p");
+        ObjParrafo.classList.add("card-text");
+        ObjParrafo.style.fontSize = "1.25rem";
+        ObjParrafo.textContent = this.texto;
+
+        // Añadir los elementos hijos al elemento principal
+        ObjCuerpo.appendChild(ObtTitulo);
+        ObjCuerpo.appendChild(OvjFoto);
+        ObjCuerpo.appendChild(ObjCategoria);
+        ObjCuerpo.appendChild(ObjFecha);
+        ObjCuerpo.appendChild(ObjParrafo);
+        ObjTarjeta.appendChild(ObjCuerpo);
+        ObjContenedor.appendChild(ObjTarjeta);
+
+        // Añadir el elemento colDiv al elemento con id principal_2
+
+        const NoticiasObj = document.getElementById("principal_1");
+        NoticiasObj.appendChild(ObjContenedor);
+
+
+    }
+
+
+
+    if (this.tipo=="T2"){
+        // Crear un elemento div con la clase col-lg-12 y col-md-6
+        const ObjContenedor = document.createElement("div");
+        ObjContenedor.classList.add("col-lg-12", "col-md-6");
+
+        // Crear un elemento card
+        const ObjTarjeta = document.createElement("div");
+        ObjTarjeta.classList.add("card");
+
+        // Crear un elemento h2 con la clase card-title y el texto "Título de la noticia"
+        const ObjTitulo = document.createElement("h2");
+        ObjTitulo.classList.add("card-title", "mb-4");
+        ObjTitulo.style.fontSize = "1.75rem";
+        ObjTitulo.textContent = this.titulo
+
+        // Crear un elemento img con la clase card-img-top y el atributo src "imagen-destacada.jpg"
+        const ObjFoto = document.createElement("img");
+        ObjFoto.classList.add("card-img-top");
+        ObjFoto.src = this.foto;
+        ObjFoto.alt = "Imagen de la Noticia";
+
+        const ObjVideo = document.createElement("video");
+        ObjVideo.setAttribute("class", "embed-responsive-item");
+        ObjVideo.setAttribute("controls", "");
+        var source = document.createElement("source");
+        source.setAttribute("src", this.video);
+        source.setAttribute("type", "video/mp4");
+        ObjVideo.appendChild(source);
+
+        // Crear un elemento h5 con la clase card-subtitle y el texto "Categoría"
+        const categoria = document.createElement("h4");
+        categoria.classList.add("card-subtitle", "mb-2", "text-muted");
+        /*categoria.style.fontSize = "1rem";*/
+        categoria.textContent =  this.categoria;
+
+        // Crear un elemento h5 con la clase card-subtitle y el texto "Fecha"
+        const fechaNoticia = new Date(this.fecha);
+        const ObjFecha = document.createElement("h5");
+        ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
+        ObjFecha.style.fontSize = "1rem";
+        ObjFecha.textContent = fechaNoticia.toDateString();
+        // Agregar los elementos a la card y la card al div
+        ObjTarjeta.appendChild(ObjTitulo);
+            if(this.foto!==""){
+                ObjTarjeta.appendChild(ObjFoto);
+            } else{
+                ObjTarjeta.appendChild(ObjVideo);
+            };
+        ObjTarjeta.appendChild(categoria);
+        ObjTarjeta.appendChild(ObjFecha);
+        ObjContenedor.appendChild(ObjTarjeta);
+
+        // Agregar el div al documento
+        const NoticiasObj = document.getElementById("principal_2");
+        NoticiasObj.appendChild(ObjContenedor);
+    }
   
-    CrearT3() {*/
-      const ObjContenedor = document.createElement("div");
-      ObjContenedor.classList.add("col-md-4");
-  
-      const ObjTarjeta = document.createElement("div");
-      ObjTarjeta.classList.add("card");
-  
-      const ObjCuerpo = document.createElement("div");
-      ObjCuerpo.classList.add("card-body");
-  
-      const ObjTitulo = document.createElement("h5");
-      ObjTitulo.classList.add("card-title");
-      ObjTitulo.textContent = this.titulo;
-  
-      const ObjFoto = document.createElement("img");
-      ObjFoto.classList.add("card-img-top", "img-fluid");
-      ObjFoto.src = this.foto;
-      ObjFoto.alt = "Imagen de la Noticia";
-  
-      const fechaNoticia = new Date(this.fecha);
-      const ObjFecha = document.createElement("p");
-      ObjFecha.classList.add("card-text");
-      ObjFecha.textContent = fechaNoticia.toDateString();
-  
-      ObjCuerpo.appendChild(ObjTitulo);
-      ObjCuerpo.appendChild(ObjFoto);
-      ObjCuerpo.appendChild(ObjFecha);
-      ObjTarjeta.appendChild(ObjCuerpo);
-      ObjContenedor.appendChild(ObjTarjeta);
-/*      console.log(this.categoria)*/
-      const NoticiasObj = document.getElementById(this.categoria);
-      NoticiasObj.appendChild(ObjContenedor);
+    if (this.tipo=="T3"){
+        const ObjContenedor = document.createElement("div");
+        ObjContenedor.classList.add("col-md-4");
+    
+        const ObjTarjeta = document.createElement("div");
+        ObjTarjeta.classList.add("card");
+        ObjTarjeta.classList.add("h-100");
+    
+        const ObjCuerpo = document.createElement("div");
+        ObjCuerpo.classList.add("card-body");
+    
+        const ObjTitulo = document.createElement("h5");
+        ObjTitulo.classList.add("card-title");
+        /*ObjTitulo.classList.add("h-100");*/
+        /*ObjTitulo.classList.add("text-truncate");*/
+
+        ObjTitulo.textContent = this.titulo;
+    
+        const ObjFoto = document.createElement("img");
+        ObjFoto.classList.add("card-img-top", "img-fluid", "object-fit-cover");
+        ObjFoto.src = this.foto;
+        ObjFoto.alt = "Imagen de la Noticia";
+    
+        const fechaNoticia = new Date(this.fecha);
+        const ObjFecha = document.createElement("p");
+        ObjFecha.classList.add("card-text");
+        ObjFecha.textContent = fechaNoticia.toDateString();
+
+        const ObjVideo = document.createElement("video");
+        ObjVideo.setAttribute("class", "embed-responsive-item");
+        ObjVideo.setAttribute("controls", "");
+        var source = document.createElement("source");
+        source.setAttribute("src", this.video);
+        source.setAttribute("type", "video/mp4");
+        ObjVideo.appendChild(source);
+    
+        ObjCuerpo.appendChild(ObjTitulo);
+        ObjTarjeta.appendChild(ObjTitulo);
+            if(this.foto!==""){
+                ObjTarjeta.appendChild(ObjFoto);
+            } else{
+                ObjTarjeta.appendChild(ObjVideo);
+            };
+        ObjCuerpo.appendChild(ObjFecha);
+        ObjTarjeta.appendChild(ObjCuerpo);
+        ObjContenedor.appendChild(ObjTarjeta);
+    /*      console.log(this.categoria)*/
+        const NoticiasObj = document.getElementById(this.categoria);
+        NoticiasObj.appendChild(ObjContenedor);
+    }
+
+
+
     }
 }
 
 
+
+
 class Fila {
-    constructor(Seccion) {
+    constructor(tipo, Seccion) {
         this.Seccion=Seccion;
-        const ObjCuerpo = document.createElement("div");
-        ObjCuerpo.className="my-5";
-        ObjCuerpo.innerHTML =`
-        <h2>${this.Seccion}</h2>
-        <div class="row" id="` + this.Seccion +`"">
-        </div>
-      `;
-      console.log(this.Seccion)
-      const FilaObj = document.getElementById("Noticias");
-      FilaObj.appendChild(ObjCuerpo);
+        this.tipo=tipo;
+
+        if(this.tipo=="F1"){
+            const ObjCuerpo = document.createElement("div");
+            ObjCuerpo.classList.add("row", "align-items-stretch");
+            ObjCuerpo.setAttribute("id", "principal_2");
+            const ColumnaObj = document.getElementById("Noticias");
+            ColumnaObj.appendChild(ObjCuerpo);
+        }
+        if (this.tipo=="F2"){
+            const ObjCuerpo = document.createElement("div");
+            ObjCuerpo.classList.add("col-lg-4", "col-md-12");
+            const FilaObj = document.createElement("div");
+            FilaObj.classList.add("row");
+            FilaObj.setAttribute("id", "principal_2");
+            ObjCuerpo.appendChild(FilaObj);
+            const ColumnaObj = document.getElementById("principal_1");
+            ColumnaObj.appendChild(ObjCuerpo);
+        }
+        if(this.tipo=="F3"){
+            const ObjCuerpo = document.createElement("div");
+            ObjCuerpo.classList.add("my-5","h-100")
+            const ObjTitulo = document.createElement("h2");
+            ObjTitulo.textContent = this.Seccion;
+            const FilaObj = document.createElement("div");
+            FilaObj.classList.add("row");
+            FilaObj.setAttribute("id", this.Seccion);
+            ObjCuerpo.appendChild(ObjTitulo);
+            ObjCuerpo.appendChild(FilaObj);
+            const ColumnaObj = document.getElementById("Noticias");
+            ColumnaObj.appendChild(ObjCuerpo);
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
   }
