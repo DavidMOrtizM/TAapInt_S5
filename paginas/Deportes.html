@@ -1,81 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Faro - Deportes</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="logo.png" alt="El Faro" height="50"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Deporte</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Negocios</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Faro - Noticias</title>
+  <!--Font Awesome-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!--Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body onload="Listar_Noticias('deportes')">
 
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Noticias deportivas</h1>
-        <p class="lead">Manténgase al tanto de las últimas noticias deportivas en El Faro.</p>
-      </div>
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="" href="#">
+      <img src="../resources/images/logo.png" alt="El Faro" height="60" class="logo-img">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Deporte</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Negocios</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+  <!-- Jumbotron -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Noticias de Deportes</h1>
+      <p class="lead">Manténgase informado con lo último en noticias en El Faro.</p>
+    </div>
+  </div>
+  <!-- Main content -->
+  <main class="container my-5" id="Noticias">
+<!-- 	<div class="row">
+		<div class="col-md-4">
+			<div class="card">
+			  <div class="card-body">
+				<h5 class="card-title">Otras noticias</h5>
+				<p class="card-text">Texto breve de otras noticias recientes.</p>
+			  </div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body">
+					<h5 class="card-title">Video destacado</h5>
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+					</div>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body">
+					<h5 class="card-title">Audio destacado</h5>
+					<audio controls>
+					<source src="audio.mp3" type="audio/mpeg">
+					Your browser does not support the audio element.
+					</audio>
+				</div>
+			</div>
+		</div>-->
+<!-- Deporte -->
+<!-- Deporte -->
+<!-- Negocios -->
 
-    <main class="container my-5">
-      <div class="row">
-        <div class="col-lg-8">
-          <h2>Título de la noticia deportiva</h2>
-          <p>Categoría</p>
-          <p>Texto del artículo</p>
-          <hr>
-          <h2>Título de la noticia deportiva</h2>
-          <p>Categoría</p>
-          <p>Texto del artículo</p>
-          <hr>
-          <h2>Título de la noticia deportiva</h2>
-          <p>Categoría</p>
-          <p>Texto del artículo</p>
-        </div>
-        <div class="col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Otras noticias deportivas</h5>
-              <p class="card-text">Texto breve de otras noticias deportivas recientes.</p>
-            </div>
-          </div>
-          <div class="card mt-3">
-            <div class="card-body">
-              <h5 class="card-title">Video destacado</h5>
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-</div>
-</div>
-</div>
-</div>
-</div>
 </main>
+<!-- Footer -->
 <footer class="bg-light text-center text-lg-start mt-5">
   <div class="container p-4">
     <div class="row">
       <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
         <h5 class="text-uppercase">El Faro</h5>
-        <p>Somos un periódico líder en noticias locales e internacionales, que ofrece información de calidad y relevante para nuestra comunidad.</p>
+        <p>El Faro es un periódico local con la mejor cobertura de noticias.</p>
       </div>
       <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
         <h5 class="text-uppercase">Secciones</h5>
@@ -93,31 +101,26 @@
       </div>
       <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
         <h5 class="text-uppercase mb-0">Redes sociales</h5>
-        <ul class="list-unstyled">
-          <li>
-            <a href="#" class="me-4 text-reset">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="me-4 text-reset">
-              <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="me-4 text-reset">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
+				<div class="col-md-6">
+					<ul class="footer-social-media">
+						<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+						<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+					</ul>
+				</div>
       </div>
     </div>
   </div>
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2023 El Faro - Todos los derechos reservados
-  </div>
+    <div class="text-center p-3">
+      <p>© 2023 El Faro. Todos los derechos reservados.</p>
+    </div>
 </footer>
+	<!-- Incluir el archivo JavaScript de Bootstrap 
+	<script src="https://davidmortizm.github.io/js/funciones.js"></script>-->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-GF/h9E8jKsU6/3q6hqZU6Q8Cm0o73Yj58y4ir4y1bB8WJSdiVKLbLlOJiiaSdt8p" crossorigin="anonymous"></script>
-  </body>
+		<!-- Incluir el archivo JavaScript de Bootstrap -->
+	<script src="../js/funciones.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+</body>
 </html>
