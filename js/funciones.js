@@ -101,7 +101,9 @@ if (window.localStorage.length === 0) {
 }
 
 
-
+function Click_link(){
+    localStorage.setItem('ID', JSON.stringify(""));
+}
 
 
 
