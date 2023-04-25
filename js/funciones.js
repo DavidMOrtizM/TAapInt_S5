@@ -2,6 +2,7 @@
 /*import * as elementos from '../js/elementos.js'*/
 
 var Categorias="";
+var IDNoticias="";
 if (window.localStorage.length === 0) {
     var List_Noticias = [
     {
@@ -106,7 +107,13 @@ if (window.localStorage.length === 0) {
 
 
 
+function Click_Card(Id_noticias){
+    IDNoticias=Id_noticias;
+    console.log(IDNoticias);
+    Listar_Noticias("Nacional");
+    window.location.reload()
 
+}
 
 
 function Listar_Noticias(Categoria){
@@ -122,21 +129,16 @@ function Listar_Noticias(Categoria){
 
 
         if(Categoria=="Principal"){
-
-            const ObjFPrincipal1 = new Fila("F1","");
-
-            var List_Pri = List_Noticias.slice(0, 1);
+            const ObjFPrincipal1 = new Fila("F1","principal_1");
+            var List_Pri = LocalStorage_Noticas.slice(0, 1);
             List_Pri.forEach((elemento)=>{
                 const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
             });
-
-            const ObjFPrincipal2 = new Fila("F2","");
-
-            var List_Seg_Ter = List_Noticias.slice(1, 3);
+            const ObjFPrincipal2 = new Fila("F2","principal_2");
+            var List_Seg_Ter = LocalStorage_Noticas.slice(1, 3);
             List_Seg_Ter.forEach((elemento)=>{
                 const ObjTarjetaT2 = new Tarjeta("T2",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
             });
-
             const ObjFilaNacional = new Fila("F3","Nacional");
             const ObjFilaNegocio = new Fila("F3","Negocios");
             const ObjFilaDeporte = new Fila("F3","Deportes");
@@ -144,6 +146,46 @@ function Listar_Noticias(Categoria){
                 const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
             });
         }
+        if(Categoria=="Nacional"){
+            const ObjFPrincipal1 = new Fila("F1","principal_1");
+            var ID="";
+            var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
+                return noticia.categoria === Categorias;
+              });
+            if(IDNoticias==""){
+                var List_Pri = List_Filtrado.slice(0, 1);
+                List_Pri.forEach((elemento)=>{
+                    const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+                    ID=elemento.ID
+                    console.log(ID);
+                });
+            }else[
+                List_Filtrado.forEach((elemento)=>{
+                    if(elemento.ID==IDNoticias){
+                        const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+                        ID=elemento.ID
+                    }})
+            ];
+            const ObjFilaNacional = new Fila("F3",Categorias);
+            List_Filtrado.forEach((elemento)=>{
+                if(elemento.ID!=ID){
+                    const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+                };
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
     while (NoticiasObj.firstChild) {NoticiasObj.removeChild(NoticiasObj.firstChild)};
     LocalStorage_Noticas.forEach((elemento)=>{
@@ -191,55 +233,6 @@ function Listar_Noticias(Categoria){
 
 
 
-/*
-class Tarjeta {
-    constructor(ID, titulo,categoria,foto,texto,audio,video,fecha) {
-      this.ID = ID;
-      this.titulo = titulo;
-      this.categoria = categoria;
-      this.foto = foto;
-      this.texto = texto;
-      this.titulo = titulo;
-      this.audio = audio;
-      this.video = video;
-      this.fecha = fecha;
-    }
-  
-    CrearT3() {
-        const ObjContenedor = document.createElement("div");
-        ObjContenedor.classList.add("col-md-4");
-        
-        const ObjTarjeta = document.createElement("div");
-        ObjTarjeta.classList.add("card");
-        
-        const ObjCuerpo = document.createElement("div");
-        ObjCuerpo.classList.add("card-body");
-        
-        const ObjTitulo = document.createElement("h5");
-        ObjTitulo.classList.add("card-title");
-        ObjTitulo.textContent = this.titulo;
-        
-        const ObjFoto = document.createElement("img");
-        ObjFoto.classList.add("card-img-top", "img-fluid");
-        ObjFoto.src = this.foto;
-        ObjFoto.alt = "Imagen de la Noticia";
-
-        let fechaNoticia = new Date(this.fecha);
-        const ObjFecha = document.createElement("p");
-        ObjFecha.classList.add("card-text");
-        ObjFecha.textContent = this.fechaNoticia;
-
-        ObjCuerpo.appendChild(ObjTitulo);
-        ObjCuerpo.appendChild(ObjFoto);
-        ObjCuerpo.appendChild(ObjFecha);
-        ObjTarjeta.appendChild(ObjCuerpo);
-        ObjContenedor.appendChild(ObjTarjeta);
-        let NoticiasObj = document.getElementById('noticias');
-        NoticiasObj.appendChild(ObjContenedor);
-    }
-  
-
-}*/
 
 class Tarjeta {
     constructor(tipo, ID, titulo, categoria, foto, texto, audio, video, fecha) {
@@ -262,6 +255,7 @@ class Tarjeta {
         // Crear el elemento div con clase card w-100 h-100
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "w-100", "h-100");
+        if(Categorias=="Principal"){ObjTarjeta.classList.add("cardhover")};
 
         // Crear el elemento div con clase card-body
         const ObjCuerpo = document.createElement("div");
@@ -274,34 +268,49 @@ class Tarjeta {
         ObtTitulo.textContent = this.titulo;
 
         // Crear el elemento img con clase card-img-top y src "imagen-destacada.jpg"
-        const OvjFoto = document.createElement("img");
-        OvjFoto.classList.add("card-img-top");
-        OvjFoto.src = this.foto;
-        OvjFoto.alt = "Imagen de la noticia";
+        const ObjFoto = document.createElement("img");
+        ObjFoto.classList.add("card-img-top", "w-800");
+        ObjFoto.src = this.foto;
+        ObjFoto.alt = "Imagen de la noticia";
+
+        const ObjVideo = document.createElement("video");
+        ObjVideo.setAttribute("class", "embed-responsive-item", "w-800");
+        ObjVideo.setAttribute("controls", "");
+        var source = document.createElement("source");
+        source.setAttribute("src", this.video);
+        source.setAttribute("type", "video/mp4");
+        ObjVideo.appendChild(source);
 
         // Crear el elemento h4 con clase card-subtitle y texto "Categoría"
-        const ObjCategoria = document.createElement("h4");
+        const ObjCategoria = document.createElement("h3");
         ObjCategoria.classList.add("card-subtitle", "mb-2", "text-muted");
-        ObjCategoria.style.fontSize = "1.5rem";
+        /*ObjCategoria.style.fontSize = "1.5rem";*/
         ObjCategoria.textContent = this.categoria;
 
         // Crear el elemento h4 con clase card-subtitle y texto "Fecha"
         const fechaNoticia = new Date(this.fecha);
-        const ObjFecha = document.createElement("h4");
+        const ObjFecha = document.createElement("h2");
         ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
-        ObjFecha.style.fontSize = "1.5rem";
+        /*ObjFecha.style.fontSize = "1.5rem";*/
         ObjFecha.textContent = fechaNoticia.toDateString();;
 
         // Crear el elemento p con clase card-text y texto "Texto breve de la noticia importante."
         const ObjParrafo = document.createElement("p");
         ObjParrafo.classList.add("card-text");
+        if(Categorias=="Principal"){ObjParrafo.classList.add("text-truncate");}
+
+
         ObjParrafo.style.fontSize = "1.25rem";
         ObjParrafo.textContent = this.texto;
 
         // Añadir los elementos hijos al elemento principal
         ObjCuerpo.appendChild(ObtTitulo);
-        ObjCuerpo.appendChild(OvjFoto);
         ObjCuerpo.appendChild(ObjCategoria);
+        if(this.foto!==""){
+                ObjTarjeta.appendChild(ObjFoto);
+            } else{
+                ObjTarjeta.appendChild(ObjVideo);
+            };
         ObjCuerpo.appendChild(ObjFecha);
         ObjCuerpo.appendChild(ObjParrafo);
         ObjTarjeta.appendChild(ObjCuerpo);
@@ -324,7 +333,7 @@ class Tarjeta {
 
         // Crear un elemento card
         const ObjTarjeta = document.createElement("div");
-        ObjTarjeta.classList.add("card");
+        ObjTarjeta.classList.add("card", "cardhover");
 
         // Crear un elemento h2 con la clase card-title y el texto "Título de la noticia"
         const ObjTitulo = document.createElement("h2");
@@ -334,12 +343,12 @@ class Tarjeta {
 
         // Crear un elemento img con la clase card-img-top y el atributo src "imagen-destacada.jpg"
         const ObjFoto = document.createElement("img");
-        ObjFoto.classList.add("card-img-top");
+        ObjFoto.classList.add("card-img-top", "w-800");
         ObjFoto.src = this.foto;
         ObjFoto.alt = "Imagen de la Noticia";
 
         const ObjVideo = document.createElement("video");
-        ObjVideo.setAttribute("class", "embed-responsive-item");
+        ObjVideo.setAttribute("class", "embed-responsive-item", "w-800");
         ObjVideo.setAttribute("controls", "");
         var source = document.createElement("source");
         source.setAttribute("src", this.video);
@@ -360,12 +369,13 @@ class Tarjeta {
         ObjFecha.textContent = fechaNoticia.toDateString();
         // Agregar los elementos a la card y la card al div
         ObjTarjeta.appendChild(ObjTitulo);
+        ObjTarjeta.appendChild(categoria);
             if(this.foto!==""){
                 ObjTarjeta.appendChild(ObjFoto);
             } else{
                 ObjTarjeta.appendChild(ObjVideo);
-            };
-        ObjTarjeta.appendChild(categoria);
+        };
+        
         ObjTarjeta.appendChild(ObjFecha);
         ObjContenedor.appendChild(ObjTarjeta);
 
@@ -379,31 +389,33 @@ class Tarjeta {
         ObjContenedor.classList.add("col-md-4");
     
         const ObjTarjeta = document.createElement("div");
-        ObjTarjeta.classList.add("card");
+        ObjTarjeta.classList.add("card", "cardhover");
         ObjTarjeta.classList.add("h-100");
+        var noticia_id=this.ID;
+        ObjTarjeta.addEventListener("click", function() {Click_Card(noticia_id)});
     
         const ObjCuerpo = document.createElement("div");
         ObjCuerpo.classList.add("card-body");
     
-        const ObjTitulo = document.createElement("h5");
+        const ObjTitulo = document.createElement("h4");
         ObjTitulo.classList.add("card-title");
         /*ObjTitulo.classList.add("h-100");*/
         /*ObjTitulo.classList.add("text-truncate");*/
 
         ObjTitulo.textContent = this.titulo;
     
-        const ObjFoto = document.createElement("img");
+        const ObjFoto = document.createElement("img", "h-80");
         ObjFoto.classList.add("card-img-top", "img-fluid", "object-fit-cover");
         ObjFoto.src = this.foto;
         ObjFoto.alt = "Imagen de la Noticia";
     
         const fechaNoticia = new Date(this.fecha);
-        const ObjFecha = document.createElement("p");
+        const ObjFecha = document.createElement("h5");
         ObjFecha.classList.add("card-text");
         ObjFecha.textContent = fechaNoticia.toDateString();
 
         const ObjVideo = document.createElement("video");
-        ObjVideo.setAttribute("class", "embed-responsive-item");
+        ObjVideo.setAttribute("class", "embed-responsive-item", );
         ObjVideo.setAttribute("controls", "");
         var source = document.createElement("source");
         source.setAttribute("src", this.video);
@@ -441,7 +453,7 @@ class Fila {
         if(this.tipo=="F1"){
             const ObjCuerpo = document.createElement("div");
             ObjCuerpo.classList.add("row", "align-items-stretch");
-            ObjCuerpo.setAttribute("id", "principal_2");
+            ObjCuerpo.setAttribute("id", this.Seccion);
             const ColumnaObj = document.getElementById("Noticias");
             ColumnaObj.appendChild(ObjCuerpo);
         }
@@ -450,7 +462,7 @@ class Fila {
             ObjCuerpo.classList.add("col-lg-4", "col-md-12");
             const FilaObj = document.createElement("div");
             FilaObj.classList.add("row");
-            FilaObj.setAttribute("id", "principal_2");
+            FilaObj.setAttribute("id", this.Seccion);
             ObjCuerpo.appendChild(FilaObj);
             const ColumnaObj = document.getElementById("principal_1");
             ColumnaObj.appendChild(ObjCuerpo);

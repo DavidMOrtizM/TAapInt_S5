@@ -1,3 +1,30 @@
+/*Se importa la fuente "Oswald" desde Google Fonts para usar en toda la página.*/
+/*@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap");*/
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+/*Se aplica a todos los elementos de la página y establece que la fuente utilizada será "Oswald" y la tipografía se establece como "sans-serif".*/
+* {
+  /*font-family: "Oswald", sans-serif;*/
+  font-family: 'Lato', sans-serif;
+}
+html {  font-size: 16px; /* Tamaño de fuente base */}
+
+p, a, label, input,textarea, button {  font-size: 1.25em; /* 16px */}
+
+h1 {  font-size: 2.5rem; /* 40px */}
+
+h2 {  font-size: 2rem; /* 32px */}
+
+h3 {  font-size: 1.75rem; /* 24px */}
+
+h4 {  font-size: 1.5rem; /* 20px */}
+
+h5 {  font-size: 1rem; /* 16px */}
+
+h6 {  font-size: 0.875rem; /* 14px */}
+
+
+
 /* Estilos de la jumbotron */
 .jumbotron {
   background-color: #F5F5F5;
@@ -25,14 +52,17 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   background-color: #FFFFFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 .card-subtitle {
   color: #5A5A5A;
+  text-align: justify;
 }
 
 .card-text {
   color: #393E46;
+  text-align: justify;
 }
 
 .card-img-top {
@@ -110,4 +140,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 a.navbar-brand {
   color: white !important;
+}
+.cardhover:hover {
+  transform: scale(1.05);
+  font-weight: bold;
 }
