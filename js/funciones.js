@@ -303,12 +303,12 @@ class Tarjeta {
     if(this.tipo=="T1"){
 
         const ObjContenedor = document.createElement("div");
-        ObjContenedor.classList.add("col-lg-8", "col-md-12");
+        ObjContenedor.classList.add("col-lg-8", "col-md-12", "custom-col");
 
         // Crear el elemento div con clase card w-100 h-100
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "w-100", "h-100");
-        if(Categorias=="Principal"){ObjTarjeta.classList.add("cardhover")};
+        if(Categorias=="principal"){ObjTarjeta.classList.add("cardhover")};
 
         // Crear el elemento div con clase card-body
         const ObjCuerpo = document.createElement("div");
@@ -386,7 +386,7 @@ class Tarjeta {
     if (this.tipo=="T2"){
         // Crear un elemento div con la clase col-lg-12 y col-md-6
         const ObjContenedor = document.createElement("div");
-        ObjContenedor.classList.add("col-lg-12", "col-md-6");
+        ObjContenedor.classList.add("col-lg-12", "col-md-6", "custom-col");
 
         // Crear un elemento card
         const ObjTarjeta = document.createElement("div");
@@ -443,7 +443,7 @@ class Tarjeta {
   
     if (this.tipo=="T3"){
         const ObjContenedor = document.createElement("div");
-        ObjContenedor.classList.add("col-md-4");
+        ObjContenedor.classList.add("col-md-4", "custom-col");
     
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "cardhover");
