@@ -2,7 +2,14 @@
 /*import * as elementos from '../js/elementos.js'*/
 
 var Categorias="";
-var IDNoticias="";
+
+var IDNoticias="N02";
+
+localStorage.setItem('ID', JSON.stringify(IDNoticias));
+
+
+
+
 if (window.localStorage.length === 0) {
     var List_Noticias = [
     {
@@ -147,8 +154,8 @@ function Listar_Noticias(Categoria){
             });
         }
         if(Categoria=="Nacional"){
+            var ID = JSON.parse(localStorage.getItem('ID'));
             const ObjFPrincipal1 = new Fila("F1","principal_1");
-            var ID="";
             var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
                 return noticia.categoria === Categorias;
               });
