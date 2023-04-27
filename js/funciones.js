@@ -2,6 +2,7 @@
 /*import * as elementos from '../js/elementos.js'*/
 
 var Categorias="";
+var contador=0;
 if ((localStorage.getItem("Noticias") === null)) {
     var List_Noticias = [
     {
@@ -132,12 +133,15 @@ function Click_Card(Id_noticias,seccion_id){
 
 function Listar_Noticias(Categoria){
     Categorias=Categoria;
+    
     var LocalStorage_Noticas = JSON.parse(localStorage.getItem('Noticias'));
+    localStorage.setItem('cuenta', LocalStorage_Noticas.length);
     LocalStorage_Noticas.sort(function(a, b){
         var fechaA = new Date(a.fecha);
         var fechaB = new Date(b.fecha);
         return fechaB - fechaA;
     });
+
     if(Categorias=="principal"){
         const ObjFPrincipal1 = new Fila("F1","principal_1");
         var List_Pri = LocalStorage_Noticas.slice(0, 1);
@@ -156,6 +160,7 @@ function Listar_Noticias(Categoria){
             const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
         });
     }else{
+        
         var ID = JSON.parse(localStorage.getItem('ID'));
         const ObjFPrincipal1 = new Fila("F1","principal_1");
         var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
@@ -177,10 +182,16 @@ function Listar_Noticias(Categoria){
         ];
         const ObjFilaNacional = new Fila("F3",Categorias);
         List_Filtrado.forEach((elemento)=>{
+            contador++;
             if(elemento.ID!=ID){
                     const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
             };
         });
+        let ContadorObj = document.getElementById('contador');
+        let ContadorTxtaObj = document.createElement("h4");
+        ContadorTxtaObj.innerHTML="Actualmente hay " + contador +" noticias en esta Sección";
+        ContadorObj.appendChild(ContadorTxtaObj); 
+
         Agregar_Form();
     }
 }
@@ -238,23 +249,11 @@ function Agregar_Form(){
     Form_Obj.appendChild(ArticulosObj);
 
     function Agregar_Noticia(){
-        var List_Not = JSON.parse(localStorage.getItem('Noticias'));
-        var ListaIDs="";
-        List_Not.sort(function(a, b) {
-            var IDa = parseInt(a.ID);
-            var IDb = parseInt(b.ID);
-            return IDa - IDb;
-          });
-        List_Not .forEach((elemento)=>{
-            ListaIDs = elemento.ID
-        });
-        var ultimo = ListaIDs[ListaIDs.length-1];
-        console.log(ultimo);
-        ultimo++;
-        console.log(ultimo);
+        var cuenta = parseInt(JSON.parse(localStorage.getItem('cuenta')));
+        cuenta++;
         const fecha_actual = new Date().toISOString().slice(0, 10);
         List_Noticias.push({
-            "ID":"" + ultimo,
+            "ID": cuenta,
             "titulo": document.getElementById("Txt_Titulo").value,
             "categoria":Categorias,
             "foto":"../resources/images/sin_imagen.png",
@@ -433,10 +432,10 @@ class Tarjeta {
             } else{
                 ObjTarjeta.appendChild(ObjVideo);
             };
-        ObjCuerpo.appendChild(ObjFecha);
-        ObjCuerpo.appendChild(ObjParrafo);
-        ObjTarjeta.appendChild(ObjCuerpo);
-        ObjContenedor.appendChild(ObjTarjeta);
+        ObjTarjeta.appendChild(ObjFecha);
+        ObjTarjeta.appendChild(ObjParrafo);
+        ObjCuerpo.appendChild(ObjTarjeta);
+        ObjContenedor.appendChild(ObjCuerpo);
 
         // Añadir el elemento colDiv al elemento con id principal_2
 
