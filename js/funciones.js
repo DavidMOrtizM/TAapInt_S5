@@ -2,10 +2,10 @@
 /*import * as elementos from '../js/elementos.js'*/
 
 var Categorias="";
-if (window.localStorage.length === 0) {
+if ((localStorage.getItem("Noticias") === null)) {
     var List_Noticias = [
     {
-        "ID" :"N01",
+        "ID" :"1",
         "titulo": "Cierran todo el borde costero de San Pedro de la Paz por sospecha de gripe aviar: hay aves muertas",
         "categoria":"nacional",
         "foto":"../resources/images/gripe-aviar.jpg",
@@ -15,7 +15,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-29"
     },
     {
-        "ID" :"N02",
+        "ID" :"2",
         "titulo": "Detienen a hombre en situación de calle acusado de robar cafetería en el centro de Temuco",
         "categoria":"nacional",
         "foto":"../resources/images/detienen-hombre.jpg",
@@ -25,7 +25,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-20"
     },
     {
-        "ID" :"N03",
+        "ID" :"3",
         "titulo": "Aguas Andinas crea servidor de Minecraft para concientizar sobre sequía en Chile: Revisa cómo jugarlo",
         "categoria":"nacional",
         "foto":"",
@@ -35,7 +35,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-30"
     },
     {
-        "ID" :"N04",
+        "ID" :"4",
         "titulo": "Con un chileno en el podio: en México se bajó el telón a la serie Red Bull Cerro Abajo",
         "categoria":"deportes",
         "foto":"../resources/images/Deportes red bull.jpg",
@@ -45,7 +45,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-27"
     },
     {
-        "ID" :"N05",
+        "ID" :"5",
         "titulo": "El campeón domina: Enzo Montecinos se alza con victoria en la primera fecha del karting nacional",
         "categoria":"deportes",
         "foto":"../resources/images/campeon karting-deportes.jpg",
@@ -55,7 +55,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-26"
     },
     {
-        "ID" :"N06",
+        "ID" :"6",
         "titulo": "Selknam aplasta a American Raptors y debuta con victoria en la Súper Rugby Americas",
         "categoria":"deportes",
         "foto":"../resources/images/rugby-deportes.jpg",
@@ -65,7 +65,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-02-19"
     },
     {
-        "ID" :"N07",
+        "ID" :"7",
         "titulo": "Emprendedores de la Universidad de Chile son seleccionados por Mucker Lab",
         "categoria":"negocios",
         "foto":"../resources/images/premiacion emprendedores-negocio.jpg",
@@ -75,7 +75,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-24"
     },
     {
-        "ID" :"N08",
+        "ID" :"8",
         "titulo": "Banco de Chile presenta nueva versión de La Feria Huertera, una vitrina para el emprendimiento sustentable",
         "categoria":"negocios",
         "foto":"../resources/images/feria-huertera-negocios.jpg",
@@ -85,7 +85,7 @@ if (window.localStorage.length === 0) {
         "fecha":"2023-03-20"
     },
     {
-        "ID" :"N09",
+        "ID" :"9",
         "titulo": "Abren convocatoria de concurso que premia a emprendimientos tecnológicos con $10 millones",
         "categoria":"negocios",
         "foto":"../resources/images/convocatoria-negocios.jpg",
@@ -100,26 +100,33 @@ if (window.localStorage.length === 0) {
     var List_Noticias = JSON.parse(localStorage.getItem('Noticias'));
 }
 
+function ActualizaTiempo() {
+    const fecha = new Date();
+    const options = { 
+       year: 'numeric', 
+       month: 'long', 
+       day: 'numeric', 
+       hour: 'numeric', 
+       minute: 'numeric', 
+       second: 'numeric',
+       hour12: false 
+    };
+    const formatofecha = fecha.toLocaleDateString('es-ES', options);
+    const relog = document.getElementById('relog');
+    relog.innerHTML = formatofecha ;    
+}
+
+setInterval(ActualizaTiempo, 1000);
 
 function Click_link(){
     localStorage.setItem('ID', JSON.stringify(""));
 }
 
 
-
-
 function Click_Card(Id_noticias,seccion_id){
     localStorage.setItem('ID', JSON.stringify(Id_noticias));
     localStorage.setItem('Sec', JSON.stringify(seccion_id));
-    console.log(seccion_id);
-  /*  Listar_Noticias(seccion_id);*/
     window.location.href = seccion_id + ".html"
-
-    /*
-    Listar_Noticias(JSON.parse(localStorage.getItem('Sec').toString));
-    window.location.href = JSON.parse(localStorage.getItem('Sec').toString) + ".html";*/
-    /*window.location.reload()*/
-
 }
 
 
@@ -130,160 +137,216 @@ function Listar_Noticias(Categoria){
         var fechaA = new Date(a.fecha);
         var fechaB = new Date(b.fecha);
         return fechaB - fechaA;
-      });
-        if(Categorias=="principal"){
-            const ObjFPrincipal1 = new Fila("F1","principal_1");
-            var List_Pri = LocalStorage_Noticas.slice(0, 1);
+    });
+    if(Categorias=="principal"){
+        const ObjFPrincipal1 = new Fila("F1","principal_1");
+        var List_Pri = LocalStorage_Noticas.slice(0, 1);
+        List_Pri.forEach((elemento)=>{
+            const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+        });
+        const ObjFPrincipal2 = new Fila("F2","principal_2");
+        var List_Seg_Ter = LocalStorage_Noticas.slice(1, 3);
+        List_Seg_Ter.forEach((elemento)=>{
+            const ObjTarjetaT2 = new Tarjeta("T2",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+        });
+        const ObjFilaNacional = new Fila("F3","nacional");
+        const ObjFilaNegocio = new Fila("F3","negocios");
+        const ObjFilaDeporte = new Fila("F3","deportes");
+        LocalStorage_Noticas.forEach((elemento)=>{
+            const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+        });
+    }else{
+        var ID = JSON.parse(localStorage.getItem('ID'));
+        const ObjFPrincipal1 = new Fila("F1","principal_1");
+        var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
+            return noticia.categoria === Categorias;
+        });
+        if(ID==""){
+            var List_Pri = List_Filtrado.slice(0, 1);
             List_Pri.forEach((elemento)=>{
                 const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+                ID=elemento.ID
+                console.log(ID);
             });
-            const ObjFPrincipal2 = new Fila("F2","principal_2");
-            var List_Seg_Ter = LocalStorage_Noticas.slice(1, 3);
-            List_Seg_Ter.forEach((elemento)=>{
-                const ObjTarjetaT2 = new Tarjeta("T2",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-            });
-            const ObjFilaNacional = new Fila("F3","nacional");
-            const ObjFilaNegocio = new Fila("F3","negocios");
-            const ObjFilaDeporte = new Fila("F3","deportes");
-            LocalStorage_Noticas.forEach((elemento)=>{
-                const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-            });
-        }
-        if(Categorias=="nacional"){
-            var ID = JSON.parse(localStorage.getItem('ID'));
-            const ObjFPrincipal1 = new Fila("F1","principal_1");
-            var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
-                return noticia.categoria === Categorias;
-              });
-            if(ID==""){
-                var List_Pri = List_Filtrado.slice(0, 1);
-                List_Pri.forEach((elemento)=>{
+        }else[
+            List_Filtrado.forEach((elemento)=>{
+                if(elemento.ID==ID){
                     const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
                     ID=elemento.ID
-                    console.log(ID);
-                });
-            }else[
-                List_Filtrado.forEach((elemento)=>{
-                    if(elemento.ID==ID){
-                        const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                        ID=elemento.ID
-                    }})
-            ];
-            const ObjFilaNacional = new Fila("F3",Categorias);
-            List_Filtrado.forEach((elemento)=>{
-                if(elemento.ID!=ID){
+                }})
+        ];
+        const ObjFilaNacional = new Fila("F3",Categorias);
+        List_Filtrado.forEach((elemento)=>{
+            if(elemento.ID!=ID){
                     const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                };
-            });
-        }
-        if(Categorias=="deportes"){
-            var ID = JSON.parse(localStorage.getItem('ID'));
-            const ObjFPrincipal1 = new Fila("F1","principal_1");
-            var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
-                return noticia.categoria === Categorias;
-              });
-            if(ID==""){
-                var List_Pri = List_Filtrado.slice(0, 1);
-                List_Pri.forEach((elemento)=>{
-                    const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                    ID=elemento.ID
-                    console.log(ID);
-                });
-            }else[
-                List_Filtrado.forEach((elemento)=>{
-                    if(elemento.ID==ID){
-                        const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                        ID=elemento.ID
-                    }})
-            ];
-            const ObjFilaNacional = new Fila("F3",Categorias);
-            List_Filtrado.forEach((elemento)=>{
-                if(elemento.ID!=ID){
-                    const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                };
-            });
-        }
-        if(Categorias=="negocios"){
-            var ID = JSON.parse(localStorage.getItem('ID'));
-            const ObjFPrincipal1 = new Fila("F1","principal_1");
-            var List_Filtrado = LocalStorage_Noticas.filter(function(noticia) {
-                return noticia.categoria === Categorias;
-              });
-            if(ID==""){
-                var List_Pri = List_Filtrado.slice(0, 1);
-                List_Pri.forEach((elemento)=>{
-                    const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                    ID=elemento.ID
-                    console.log(ID);
-                });
-            }else[
-                List_Filtrado.forEach((elemento)=>{
-                    if(elemento.ID==ID){
-                        const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                        ID=elemento.ID
-                    }})
-            ];
-            const ObjFilaNacional = new Fila("F3",Categorias);
-            List_Filtrado.forEach((elemento)=>{
-                if(elemento.ID!=ID){
-                    const ObjTarjetaT2 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
-                };
-            });
-        }
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    while (NoticiasObj.firstChild) {NoticiasObj.removeChild(NoticiasObj.firstChild)};
-    LocalStorage_Noticas.forEach((elemento)=>{
-        if(elemento.categoria==Categorias){
-            contador++;
-            let ArticulosObj = document.createElement("div");
-            ArticulosObj.setAttribute("class", "art");
-            let TituloObj = document.createElement("h2");
-            let CategoriaObj = document.createElement("h4");
-            ArticulosObj.appendChild(TituloObj);
-            ArticulosObj.appendChild(CategoriaObj);
-            if(elemento.foto!=""){
-                let FotoObj = document.createElement("img");
-                FotoObj.src=elemento.foto;
-                ArticulosObj.appendChild(FotoObj);
-            }
-            if(elemento.video!=""){
-                var VideoObj = document.createElement("video");
-                VideoObj.setAttribute("src", elemento.video);
-                VideoObj.setAttribute("controls", "");
-                VideoObj.setAttribute("type", "video/mp4");
-                ArticulosObj.appendChild(VideoObj);
-            }        
-            let TextoObj = document.createElement("p");
-            TituloObj.innerHTML=elemento.titulo;
-            CategoriaObj.innerHTML=elemento.categoria;
-            TextoObj.innerHTML=elemento.texto;
-            ArticulosObj.appendChild(TextoObj);
-            if(elemento.audio!=""){
-                var AudioObj = document.createElement("audio");
-                AudioObj.setAttribute("src", elemento.audio);
-                AudioObj.setAttribute("controls", "");
-                ArticulosObj.appendChild(AudioObj);
-            }  
-            NoticiasObj.appendChild(ArticulosObj);
-        }
-    });
-    let ContadorObj = document.getElementById('contar');
-    let ContadorTxtaObj = document.createElement("h4");
-    ContadorTxtaObj.innerHTML="Actualmente hay " + contador +" noticias";
-    ContadorObj.appendChild(ContadorTxtaObj); 
-    */
+            };
+        });
+        Agregar_Form();
+    }
 }
+
+
+
+function Agregar_Form(){
+    const ObjFilaFrom = new Fila("F4",Categorias);
+    let Form_Obj = document.getElementById('from');
+    let ArticulosObj = document.createElement("div");
+    ArticulosObj.classList.add("col-md-8");
+    let TituloObj = document.createElement("h2");
+    TituloObj.classList.add("card-subtitle", "mb-2", "text-muted");
+    TituloObj.innerHTML="Para ingresar una nueva noticia en la seccion " + Categorias + ". Agregue el Titulo y el Parrafo de la noticia. Luego haga click en el botón para subirla"
+    ArticulosObj.appendChild(TituloObj);
+    let FormObj = document.createElement('form');
+   
+    let Titulo = document.createElement("div");
+    Titulo.classList.add("mb-3");
+    let Lable_TituloObj = document.createElement("Label");
+    Lable_TituloObj.classList.add("form-label");
+    Lable_TituloObj.innerHTML = "Titulo:";
+    let Txt_TituloObj = document.createElement("input");
+    Txt_TituloObj.classList.add("form-control");
+    Txt_TituloObj.setAttribute("type", "text");
+    Txt_TituloObj.setAttribute("id", "Txt_Titulo");
+    Titulo.appendChild(Lable_TituloObj);
+    Titulo.appendChild(Txt_TituloObj);
+
+
+    let Parrafo = document.createElement("div");
+    Parrafo.classList.add("mb-3");
+    let Lable_TxtObj = document.createElement("Label");
+    Lable_TxtObj.classList.add("form-label");
+    Lable_TxtObj.innerHTML = "Parrafo:";
+    let Txt_TxToObj = document.createElement("textarea");
+    Txt_TxToObj.classList.add("form-control");
+    Txt_TxToObj.setAttribute("name", "message");
+    Txt_TxToObj.setAttribute("rows", "5");
+    Txt_TxToObj.setAttribute("id", "Txt_Texto");
+    Parrafo.appendChild(Lable_TxtObj);
+    Parrafo.appendChild(Txt_TxToObj);
+
+    var boton = document.createElement("button");
+    boton.classList.add("btn", "btn-primary");
+    boton.setAttribute("type", "button");
+    boton.addEventListener("click", Agregar_Noticia);
+    boton.innerHTML = "Agregar Noticia";
+
+    FormObj.appendChild(Titulo);
+    FormObj.appendChild(Parrafo);
+    FormObj.appendChild(boton);
+
+    ArticulosObj.appendChild(FormObj);
+    Form_Obj.appendChild(ArticulosObj);
+
+    function Agregar_Noticia(){
+        var List_Not = JSON.parse(localStorage.getItem('Noticias'));
+        var ListaIDs="";
+        List_Not.sort(function(a, b) {
+            var IDa = parseInt(a.ID);
+            var IDb = parseInt(b.ID);
+            return IDa - IDb;
+          });
+        List_Not .forEach((elemento)=>{
+            ListaIDs = elemento.ID
+        });
+        var ultimo = ListaIDs[ListaIDs.length-1];
+        console.log(ultimo);
+        ultimo++;
+        console.log(ultimo);
+        const fecha_actual = new Date().toISOString().slice(0, 10);
+        List_Noticias.push({
+            "ID":"" + ultimo,
+            "titulo": document.getElementById("Txt_Titulo").value,
+            "categoria":Categorias,
+            "foto":"../resources/images/sin_imagen.png",
+            "texto":document.getElementById("Txt_Texto").value,
+            "audio":"",
+            "video":"",
+            "fecha": fecha_actual
+            })
+
+        localStorage.setItem('Noticias', JSON.stringify(List_Noticias));
+        Listar_Noticias(Categorias);
+        window.location.reload()
+    }
+}   
+
+
+
+
+
+  
+
+
+
+
+
+
+/*
+
+function Agregar_Form(){
+    
+    let Form_Obj = document.getElementById('form_agregar');
+    let ArticulosObj = document.createElement("div"); 
+    let TituloObj = document.createElement("h2");
+    TituloObj.innerHTML="Para ingresar una nueva noticia en la seccion " + Categorias + ". Agregue el Titulo y el Parrafo de la noticia. Luego haga click en el botón para subirla"
+    ArticulosObj.appendChild(TituloObj);
+    let FormObj = document.createElement('form');
+    let Lable_TituloObj = document.createElement("Label");
+    Lable_TituloObj.innerHTML = "Titulo:";
+    let Txt_TituloObj = document.createElement("input");
+    Txt_TituloObj.setAttribute("type", "text");
+    Txt_TituloObj.setAttribute("id", "Txt_Titulo");
+
+    let Lable_TxtObj = document.createElement("Label");
+    Lable_TxtObj.innerHTML = "Parrafo:";
+    let Txt_TxToObj = document.createElement("textarea");
+    Txt_TxToObj.setAttribute("class", "parrafo");
+    Txt_TxToObj.setAttribute("type", "text");
+    Txt_TxToObj.setAttribute("id", "Txt_Texto");
+
+    var boton = document.createElement("button");
+    boton.setAttribute("type", "button");
+    boton.addEventListener("click", Agregar_Noticia);
+    boton.innerHTML = "Agregar Noticia";
+
+    FormObj.appendChild(Lable_TituloObj);
+    FormObj.appendChild(Txt_TituloObj);
+    FormObj.appendChild(Lable_TxtObj);
+    FormObj.appendChild(Txt_TxToObj);
+    FormObj.appendChild(boton);
+
+    ArticulosObj.appendChild(FormObj);
+    Form_Obj.appendChild(ArticulosObj);
+
+    function Agregar_Noticia(){
+
+        List_Noticias.push({
+            "titulo": document.getElementById("Txt_Titulo").value,
+            "categoria":Categorias,
+            "foto":"",
+            "texto":document.getElementById("Txt_Texto").value,
+            "audio":"",
+            "video":""
+        })
+        localStorage.setItem('Noticias', JSON.stringify(List_Noticias));
+        Listar_Noticias("Nacional");
+        window.location.reload()
+    }
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -347,11 +410,11 @@ class Tarjeta {
         ObjCategoria.textContent = this.categoria;
 
         // Crear el elemento h4 con clase card-subtitle y texto "Fecha"
-        const fechaNoticia = new Date(this.fecha);
+        const fechaNoticia = new Date(this.fecha).toLocaleDateString('es-ES');
         const ObjFecha = document.createElement("h2");
         ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
         /*ObjFecha.style.fontSize = "1.5rem";*/
-        ObjFecha.textContent = fechaNoticia.toDateString();;
+        ObjFecha.textContent = fechaNoticia;
 
         // Crear el elemento p con clase card-text y texto "Texto breve de la noticia importante."
         const ObjParrafo = document.createElement("p");
@@ -421,11 +484,11 @@ class Tarjeta {
         categoria.textContent =  this.categoria;
 
         // Crear un elemento h5 con la clase card-subtitle y el texto "Fecha"
-        const fechaNoticia = new Date(this.fecha);
+        const fechaNoticia = new Date(this.fecha).toLocaleDateString('es-ES');
         const ObjFecha = document.createElement("h5");
         ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
         ObjFecha.style.fontSize = "1rem";
-        ObjFecha.textContent = fechaNoticia.toDateString();
+        ObjFecha.textContent = fechaNoticia;
         // Agregar los elementos a la card y la card al div
         ObjTarjeta.appendChild(ObjTitulo);
         ObjTarjeta.appendChild(categoria);
@@ -469,10 +532,10 @@ class Tarjeta {
         ObjFoto.src = this.foto;
         ObjFoto.alt = "Imagen de la Noticia";
     
-        const fechaNoticia = new Date(this.fecha);
+        const fechaNoticia = new Date(this.fecha).toLocaleDateString('es-ES');
         const ObjFecha = document.createElement("h5");
         ObjFecha.classList.add("card-text");
-        ObjFecha.textContent = fechaNoticia.toDateString();
+        ObjFecha.textContent = fechaNoticia;
 
         const ObjVideo = document.createElement("video");
         ObjVideo.setAttribute("class", "embed-responsive-item", );
@@ -504,49 +567,7 @@ class Tarjeta {
 }
 
 
-/*
 
-class Fila {
-    constructor(tipo, Seccion) {
-        this.Seccion=Seccion;
-        this.tipo=tipo;
-        let Categ = this.categoria;
-        this.categoria = this.categoria.charAt(0).toUpperCase() + this.categoria.slice(1) 
-        if(this.tipo=="F1"){
-            const ObjCuerpo = document.createElement("div");
-            ObjCuerpo.classList.add("row", "align-items-stretch");
-            ObjCuerpo.setAttribute("id", this.Seccion);
-            const ColumnaObj = document.getElementById("Noticias");
-            ColumnaObj.appendChild(ObjCuerpo);
-        }
-        if (this.tipo=="F2"){
-            const ObjCuerpo = document.createElement("div");
-            ObjCuerpo.classList.add("col-lg-4", "col-md-12");
-            const FilaObj = document.createElement("div");
-            FilaObj.classList.add("row");
-            FilaObj.setAttribute("id", this.Seccion);
-            ObjCuerpo.appendChild(FilaObj);
-            const ColumnaObj = document.getElementById("principal_1");
-            ColumnaObj.appendChild(ObjCuerpo);
-        }
-        if(this.tipo=="F3"){
-            const ObjCuerpo = document.createElement("div");
-            ObjCuerpo.classList.add("my-5","h-100")
-            const ObjTitulo = document.createElement("h2");
-            ObjTitulo.textContent = this.Seccion;
-            const FilaObj = document.createElement("div");
-            FilaObj.classList.add("row");
-            FilaObj.setAttribute("id", this.Seccion);
-            ObjCuerpo.appendChild(ObjTitulo);
-            ObjCuerpo.appendChild(FilaObj);
-            const ColumnaObj = document.getElementById("Noticias");
-            ColumnaObj.appendChild(ObjCuerpo);
-        };
-
-    }
-
-  }
-*/
         class Fila {
             constructor(tipo, Seccion) {
                 this.Seccion = Seccion;
@@ -554,7 +575,7 @@ class Fila {
                 let Titulo = this.Seccion;
                 Titulo = Titulo.charAt(0).toUpperCase() + Titulo.slice(1)      
                 const ObjCuerpo = document.createElement("div");
-                const ColumnaObj = document.getElementById(this.tipo == "F1" || this.tipo == "F3" ? "Noticias" : "principal_1");
+                const ColumnaObj = document.getElementById(this.tipo == "F1" || this.tipo == "F3" || this.tipo == "F4" ? "Noticias" : "principal_1");
                 if (this.tipo == "F1") {
                     ObjCuerpo.classList.add("row", "align-items-stretch");
                     ObjCuerpo.setAttribute("id", this.Seccion);
@@ -576,7 +597,14 @@ class Fila {
                     ObjCuerpo.appendChild(ObjTitulo);
                     ObjCuerpo.appendChild(FilaObj);
                     ColumnaObj.appendChild(ObjCuerpo);
-                }
+                } else if (this.tipo == "F4") {
+                    ObjCuerpo.classList.add("row")
+                    const FilaObj = document.createElement("div");
+                    FilaObj.classList.add("'col-md-8'");
+                    FilaObj.setAttribute("id", "from");
+                    ObjCuerpo.appendChild(FilaObj);
+                    ColumnaObj.appendChild(ObjCuerpo);
+                } 
             }
         }
 
