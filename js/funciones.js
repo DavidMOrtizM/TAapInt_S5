@@ -298,9 +298,7 @@ class Tarjeta {
         const ObjContenedor = document.createElement("div");
         ObjContenedor.classList.add("col-lg-8", "col-md-12", "custom-col");
         var noticia_id=this.ID; var seccion_id=this.categoria
-        if (Categorias!=="principal"){
-            ObjContenedor.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
-        };
+
         // Crear el elemento div con clase card w-100 h-100
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "w-100", "h-100");
@@ -511,6 +509,9 @@ class Tarjeta {
                 if (this.tipo == "F1") {
                     ObjCuerpo.classList.add("row", "align-items-stretch");
                     ObjCuerpo.setAttribute("id", this.Seccion);
+                    const ObjTitulo = document.createElement("h2");
+                    ObjTitulo.innerHTML="Noticias Destacadas";
+                    ObjCuerpo.appendChild(ObjTitulo);
                     ColumnaObj.appendChild(ObjCuerpo);
                 } else if (this.tipo == "F2") {
                     ObjCuerpo.classList.add("col-lg-4", "col-md-12");
