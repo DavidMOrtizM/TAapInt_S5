@@ -298,7 +298,9 @@ class Tarjeta {
         const ObjContenedor = document.createElement("div");
         ObjContenedor.classList.add("col-lg-8", "col-md-12", "custom-col");
         var noticia_id=this.ID; var seccion_id=this.categoria
-        ObjContenedor.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
+        if (Categorias!=="principal"){
+            ObjContenedor.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
+        };
         // Crear el elemento div con clase card w-100 h-100
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "w-100", "h-100");
@@ -490,7 +492,6 @@ class Tarjeta {
         ObjCuerpo.appendChild(ObjFecha);
         ObjTarjeta.appendChild(ObjCuerpo);
         ObjContenedor.appendChild(ObjTarjeta);
-          console.log(this.categoria)
             
         const NoticiasObj = document.getElementById(this.categoria);
         NoticiasObj.appendChild(ObjContenedor);
@@ -522,10 +523,18 @@ class Tarjeta {
                     ObjCuerpo.classList.add("my-5", "h-100")
                     const ObjTitulo = document.createElement("h2");
                     ObjTitulo.textContent = Titulo;
+                    if(Categorias=="principal"){
+                        const ObjLink = document.createElement("a");
+                        ObjLink.setAttribute("style", "text-decoration: none;");
+                        ObjLink.setAttribute("href", this.Seccion + ".html");
+                        ObjLink.appendChild(ObjTitulo);
+                        ObjCuerpo.appendChild(ObjLink);
+                    }else{
+                        ObjCuerpo.appendChild(ObjTitulo);
+                        };
                     const FilaObj = document.createElement("div");
                     FilaObj.classList.add("row");
                     FilaObj.setAttribute("id", this.Seccion);
-                    ObjCuerpo.appendChild(ObjTitulo);
                     ObjCuerpo.appendChild(FilaObj);
                     ColumnaObj.appendChild(ObjCuerpo);
                 } else if (this.tipo == "F4") {
