@@ -509,9 +509,11 @@ class Tarjeta {
                 if (this.tipo == "F1") {
                     ObjCuerpo.classList.add("row", "align-items-stretch");
                     ObjCuerpo.setAttribute("id", this.Seccion);
-                    const ObjTitulo = document.createElement("h2");
-                    ObjTitulo.innerHTML="Noticias Destacadas";
-                    ObjCuerpo.appendChild(ObjTitulo);
+                    if(Categorias=="principal"){
+                        const ObjTitulo = document.createElement("h1");
+                        ObjTitulo.innerHTML="Noticias Destacadas";                    
+                        ObjCuerpo.appendChild(ObjTitulo);
+                    }
                     ColumnaObj.appendChild(ObjCuerpo);
                 } else if (this.tipo == "F2") {
                     ObjCuerpo.classList.add("col-lg-4", "col-md-12");
