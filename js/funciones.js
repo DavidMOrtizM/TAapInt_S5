@@ -130,6 +130,13 @@ function Click_Card(Id_noticias,seccion_id){
     window.location.href = seccion_id + ".html"
 }
 
+function Alerta(message, type) {
+    var alertSection = document.getElementById('alert-section');
+    var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    alertSection.innerHTML = alertHtml;
+  }
+
+
 
 function Listar_Noticias(Categoria){
     Categorias=Categoria;
@@ -145,8 +152,10 @@ function Listar_Noticias(Categoria){
     if(Categorias=="principal"){
         const ObjFPrincipal1 = new Fila("F1","principal_1");
         var List_Pri = LocalStorage_Noticas.slice(0, 1);
+        var primera=""
         List_Pri.forEach((elemento)=>{
             const ObjTarjetaT2 = new Tarjeta("T1",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
+            primera=elemento.titulo
         });
         const ObjFPrincipal2 = new Fila("F2","principal_2");
         var List_Seg_Ter = LocalStorage_Noticas.slice(1, 3);
@@ -159,6 +168,7 @@ function Listar_Noticias(Categoria){
         LocalStorage_Noticas.forEach((elemento)=>{
             const ObjTarjetaT3 = new Tarjeta("T3",elemento.ID, elemento.titulo,elemento.categoria,elemento.foto,elemento.texto,elemento.audio,elemento.video,elemento.fecha);
         });
+        Alerta("Ultima hora : " + primera, "warning");
     }else{
         
         var ID = JSON.parse(localStorage.getItem('ID'));
@@ -270,87 +280,6 @@ function Agregar_Form(){
 }   
 
 
-
-
-
-  
-
-
-
-
-
-
-/*
-
-function Agregar_Form(){
-    
-    let Form_Obj = document.getElementById('form_agregar');
-    let ArticulosObj = document.createElement("div"); 
-    let TituloObj = document.createElement("h2");
-    TituloObj.innerHTML="Para ingresar una nueva noticia en la seccion " + Categorias + ". Agregue el Titulo y el Parrafo de la noticia. Luego haga click en el botón para subirla"
-    ArticulosObj.appendChild(TituloObj);
-    let FormObj = document.createElement('form');
-    let Lable_TituloObj = document.createElement("Label");
-    Lable_TituloObj.innerHTML = "Titulo:";
-    let Txt_TituloObj = document.createElement("input");
-    Txt_TituloObj.setAttribute("type", "text");
-    Txt_TituloObj.setAttribute("id", "Txt_Titulo");
-
-    let Lable_TxtObj = document.createElement("Label");
-    Lable_TxtObj.innerHTML = "Parrafo:";
-    let Txt_TxToObj = document.createElement("textarea");
-    Txt_TxToObj.setAttribute("class", "parrafo");
-    Txt_TxToObj.setAttribute("type", "text");
-    Txt_TxToObj.setAttribute("id", "Txt_Texto");
-
-    var boton = document.createElement("button");
-    boton.setAttribute("type", "button");
-    boton.addEventListener("click", Agregar_Noticia);
-    boton.innerHTML = "Agregar Noticia";
-
-    FormObj.appendChild(Lable_TituloObj);
-    FormObj.appendChild(Txt_TituloObj);
-    FormObj.appendChild(Lable_TxtObj);
-    FormObj.appendChild(Txt_TxToObj);
-    FormObj.appendChild(boton);
-
-    ArticulosObj.appendChild(FormObj);
-    Form_Obj.appendChild(ArticulosObj);
-
-    function Agregar_Noticia(){
-
-        List_Noticias.push({
-            "titulo": document.getElementById("Txt_Titulo").value,
-            "categoria":Categorias,
-            "foto":"",
-            "texto":document.getElementById("Txt_Texto").value,
-            "audio":"",
-            "video":""
-        })
-        localStorage.setItem('Noticias', JSON.stringify(List_Noticias));
-        Listar_Noticias("Nacional");
-        window.location.reload()
-    }
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Tarjeta {
     constructor(tipo, ID, titulo, categoria, foto, texto, audio, video, fecha) {
       this.tipo=tipo;
@@ -368,10 +297,12 @@ class Tarjeta {
 
         const ObjContenedor = document.createElement("div");
         ObjContenedor.classList.add("col-lg-8", "col-md-12", "custom-col");
-
+        var noticia_id=this.ID; var seccion_id=this.categoria
+        ObjContenedor.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
         // Crear el elemento div con clase card w-100 h-100
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "w-100", "h-100");
+
         if(Categorias=="principal"){ObjTarjeta.classList.add("cardhover")};
 
         // Crear el elemento div con clase card-body
@@ -416,24 +347,34 @@ class Tarjeta {
         ObjFecha.textContent = fechaNoticia;
 
         // Crear el elemento p con clase card-text y texto "Texto breve de la noticia importante."
-        const ObjParrafo = document.createElement("p");
-        ObjParrafo.classList.add("card-text");
-        if(Categorias=="principal"){ObjParrafo.classList.add("text-truncate");}
 
-
-        ObjParrafo.style.fontSize = "1.25rem";
-        ObjParrafo.textContent = this.texto;
 
         // Añadir los elementos hijos al elemento principal
         ObjCuerpo.appendChild(ObtTitulo);
         ObjCuerpo.appendChild(ObjCategoria);
+       
         if(this.foto!==""){
                 ObjTarjeta.appendChild(ObjFoto);
-            } else{
+            } else {
                 ObjTarjeta.appendChild(ObjVideo);
-            };
-        ObjTarjeta.appendChild(ObjFecha);
-        ObjTarjeta.appendChild(ObjParrafo);
+        };
+
+        const ObjParrafo = document.createElement("p");
+        ObjParrafo.classList.add("card-text");
+         ObjParrafo.style.fontSize = "1.25rem";
+         ObjParrafo.textContent = this.texto; 
+         ObjTarjeta.appendChild(ObjFecha);
+         ObjTarjeta.appendChild(ObjParrafo);       
+        if(Categorias=="principal"){
+            ObjParrafo.classList.add("text-truncate");
+            const ObjParrafo2 = document.createElement("p");
+            ObjParrafo2.classList.add("card-text");
+            ObjParrafo2.style.fontSize = "1.25rem";
+            ObjParrafo2.textContent = "leer mas...";
+            ObjTarjeta.appendChild(ObjParrafo2);
+        }
+
+  
         ObjCuerpo.appendChild(ObjTarjeta);
         ObjContenedor.appendChild(ObjCuerpo);
 
@@ -441,11 +382,7 @@ class Tarjeta {
 
         const NoticiasObj = document.getElementById("principal_1");
         NoticiasObj.appendChild(ObjContenedor);
-
-
     }
-
-
 
     if (this.tipo=="T2"){
         // Crear un elemento div con la clase col-lg-12 y col-md-6
@@ -455,7 +392,8 @@ class Tarjeta {
         // Crear un elemento card
         const ObjTarjeta = document.createElement("div");
         ObjTarjeta.classList.add("card", "cardhover");
-
+        var noticia_id=this.ID; var seccion_id=this.categoria
+        ObjTarjeta.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
         // Crear un elemento h2 con la clase card-title y el texto "Título de la noticia"
         const ObjTitulo = document.createElement("h2");
         ObjTitulo.classList.add("card-title", "mb-4");
@@ -485,8 +423,7 @@ class Tarjeta {
         // Crear un elemento h5 con la clase card-subtitle y el texto "Fecha"
         const fechaNoticia = new Date(this.fecha).toLocaleDateString('es-ES');
         const ObjFecha = document.createElement("h5");
-        ObjFecha.classList.add("card-subtitle", "mb-2", "text-muted");
-        ObjFecha.style.fontSize = "1rem";
+        ObjFecha.classList.add("card-text");
         ObjFecha.textContent = fechaNoticia;
         // Agregar los elementos a la card y la card al div
         ObjTarjeta.appendChild(ObjTitulo);
@@ -513,7 +450,6 @@ class Tarjeta {
         ObjTarjeta.classList.add("card", "cardhover");
         ObjTarjeta.classList.add("h-100");
         var noticia_id=this.ID; var seccion_id=this.categoria
-        console.log(seccion_id);
         ObjTarjeta.addEventListener("click", function() {Click_Card(noticia_id,seccion_id)});
     
         const ObjCuerpo = document.createElement("div");
@@ -560,12 +496,8 @@ class Tarjeta {
         NoticiasObj.appendChild(ObjContenedor);
     }
 
-
-
     }
 }
-
-
 
         class Fila {
             constructor(tipo, Seccion) {
